@@ -1,0 +1,60 @@
+.menu-group{
+  display: flex;
+  justify-content: space-around;
+}
+.menu-item{
+  margin: auto;
+}
+.not-found{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.menu-selected{
+  color: inherit !important;
+  border-bottom:  2px solid transparent !important;
+  border-bottom-color: inherit !important;
+}
+.menu-selected-not{
+  color: rgba(0, 0, 0, 0.65) !important;
+  border-bottom:  2px solid transparent !important;
+}
+.comment-card{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(240, 240, 240);
+  padding: 4px 8px;
+}
+.empty-placeholder{
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+$base-color: #1DA57A;
+$ghost-color: #ffffff;
+$animation-duration: 2000ms; 
+
+@keyframes ghost-lines { 
+  0%   { background-position: -100px;  }
+  40%  { background-position: 40vw;    }
+  100% { background-position: 60vw;    }
+}
+
+@mixin animate-ghost-line {
+  background-image: linear-gradient(90deg, $base-color 0px, $ghost-color 40px, $base-color 80px);
+  background-size: 80vw;
+  animation: ghost-lines $animation-duration infinite linear;
+}
+.app-progress-bar{
+  height: 4px;
+  position: absolute;
+  z-index: 999;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  @include animate-ghost-line;
+}
