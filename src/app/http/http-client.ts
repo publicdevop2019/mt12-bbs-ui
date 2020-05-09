@@ -18,22 +18,22 @@ export interface ITokenResponse {
 }
 export class HttpClient {
     public static async getPostByTopic(category: string) {
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/public/posts?topic=${category}&pageNum=0&pageSize=5&sortBy=id&sortOrder=asc`);
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/public/posts?topic=${category}&pageNum=0&pageSize=99&sortBy=id&sortOrder=asc`);
         return response.data as IPostBrief[];
 
     }
     public static async getPostForUser() {
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/private/posts?pageNum=0&pageSize=5&sortBy=id&sortOrder=asc');
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/private/posts?pageNum=0&pageSize=99&sortBy=id&sortOrder=asc');
         return response.data as IPostBrief[];
 
     }
     public static async getCommentForUser() {
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/private/comments?pageNum=0&pageSize=5&sortBy=id&sortOrder=asc');
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/private/comments?pageNum=0&pageSize=99&sortBy=id&sortOrder=asc');
         return response.data as IComment[];
 
     }
     public static async getCommentForPost(postId: string) {
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/public/posts/${postId}/comments?pageNum=0&pageSize=5&sortBy=id&sortOrder=asc`);
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/public/posts/${postId}/comments?pageNum=0&pageSize=99&sortBy=id&sortOrder=asc`);
         return response.data as IComment[];
 
     }

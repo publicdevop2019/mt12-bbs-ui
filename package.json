@@ -33,8 +33,11 @@
   },
   "scripts": {
     "start": "env-cmd -f ./src/environments/.env react-app-rewired start",
-    "start:prod": "env-cmd -f ./src/environments/.env.prod react-app-rewired start",
+    "start-zh-Hans": "REACT_APP_LOCALE=zhHans env-cmd -f ./src/environments/.env --no-override react-app-rewired start",
     "build": "env-cmd -f ./src/environments/.env.prod react-app-rewired build",
+    "build-zh-Hans": "env-cmd -f ./src/environments/.env.prod --no-override react-app-rewired build",
+    "build-hw": "env-cmd -f ./src/environments/.env.hw react-app-rewired build",
+    "build-hw-zh-Hans": "REACT_APP_LOCALE=zhHans env-cmd -f ./src/environments/.env.hw --no-override react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },

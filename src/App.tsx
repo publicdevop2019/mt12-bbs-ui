@@ -2,6 +2,7 @@ import { EditOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import axios from 'axios';
 import i18n from 'i18next';
+import moment from 'moment';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Link, Redirect, Route, Switch } from "react-router-dom";
 import './App.scss';
@@ -32,6 +33,7 @@ export class App extends Component<any, IState>{
       httpInProgress: false
     }
     this.configAxios();
+    this.configMomentJs();
   }
   updateJwt(next: string) {
     this.setState({ jwt: next });
@@ -79,29 +81,22 @@ export class App extends Component<any, IState>{
       </AuthContext.Provider>
     );
   }
-  configAxios() {
+  private configAxios() {
     axios.interceptors.request.use((config) => {
-      // Do something before request is sent
       this.httpCount++;
       this.setState({ httpInProgress: true });
       if (config.url && config.url.indexOf('private') > -1)
         config.headers = { ...config.headers, Authorization: `Bearer ` + this.state.jwt }
       return config;
     }, function (error) {
-      // Do something with request error
       return Promise.reject(error);
     });
-    // Add a response interceptor
     axios.interceptors.response.use((response) => {
-      // Any status code that lie within the range of 2xx cause this function to trigger
-      // Do something with response data
       this.httpCount--;
       if (this.httpCount === 0)
         this.setState({ httpInProgress: false });
       return response;
     }, (error) => {
-      // Any status codes that falls outside the range of 2xx cause this function to trigger
-      // Do something with response error
       this.httpCount--;
       if (this.httpCount === 0)
         this.setState({ httpInProgress: false });
@@ -121,9 +116,28 @@ export class App extends Component<any, IState>{
       } else {
         message.warn(i18n.t('NET_UNKNOWN'))
       }
-      // return Promise.resolve<any>({ data: [] })
       return Promise.reject(error);
     });
+  }
+  private configMomentJs() {
+    if (i18n.language === 'zhHans')
+      moment.locale('zhHans', {
+        relativeTime: {
+          future: '未来%s',
+          past: '%s前',
+          s: '不久',
+          m: '一分钟',
+          mm: '%d分钟',
+          h: '小时',
+          hh: '%d 小时',
+          d: '天',
+          dd: '%d天',
+          M: '1月',
+          MM: '%d 月',
+          y: '1年',
+          yy: '%d年'
+        }
+      });
   }
 }
 export default App;
