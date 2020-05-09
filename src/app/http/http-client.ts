@@ -77,4 +77,16 @@ export class HttpClient {
         const token = await axios.post<ITokenResponse, AxiosResponse<ITokenResponse>>(process.env.REACT_APP_TOKEN_URL!, formData, { headers: header })
         return token.data
     }
+    public static async addLikePost(postId: string) {
+        await axios.post(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId + '/likes');
+    }
+    public static async removeLikePost(postId: string) {
+        await axios.delete(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId + '/likes');
+    }
+    public static async addLikeComment(commentId: string) {
+        await axios.post(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId + '/likes');
+    }
+    public static async removeLikeComment(commentId: string) {
+        await axios.delete(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId + '/likes');
+    }
 }

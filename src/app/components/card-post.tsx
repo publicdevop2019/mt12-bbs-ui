@@ -10,8 +10,8 @@ export interface IPostBrief {
     title: string,
     publishedAt: string,
     publishedBy: string,
-    commentNum: number,
-    viewNum: number,
+    comments: number,
+    views: number,
     editable?: boolean,
     delete: (id: string) => void,
 }
@@ -27,8 +27,8 @@ export function CardPost(props: IPostBrief) {
                             <div style={{ fontSize: '16px', fontWeight: 500 }}>{props.publishedBy}</div>
                             <div style={{ display: 'flex', flexDirection: 'row' }}>
                                 <div style={{ paddingRight: '8px' }}>{moment(props.publishedAt).fromNow()}</div>
-                                <div style={{ paddingRight: '8px' }}><span style={{ paddingRight: '4px' }}>{props.commentNum}</span><CommentOutlined /></div>
-                                <div><span style={{ paddingRight: '4px' }}>{props.viewNum}</span><EyeOutlined /></div>
+                                <div style={{ paddingRight: '8px' }}><span style={{ paddingRight: '4px' }}>{props.comments}</span><CommentOutlined /></div>
+                                <div><span style={{ paddingRight: '4px' }}>{props.views}</span><EyeOutlined /></div>
                             </div>
                         </div>
                     </div>
