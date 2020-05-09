@@ -58,3 +58,9 @@ $animation-duration: 2000ms;
   right: 0px;
   @include animate-ghost-line;
 }
+.icon-num-vertical{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

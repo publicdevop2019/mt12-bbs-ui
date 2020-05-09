@@ -14,8 +14,9 @@ export interface IPost {
     publishedAt: string,
     content: string,
     publishedBy: string,
+    likeNum: number
 }
-export interface IPostProp extends IPost {
+interface IProp extends IPost {
     reply: (commentId: string) => void
     commentList?: IComment[],
 }
@@ -24,6 +25,7 @@ export interface IComment {
     publishedAt: string,
     publishedBy: string,
     content: string,
+    likeNum: number,
     replyTo?: string,
     liked?: boolean,
     delete: (id: string) => void,
@@ -32,15 +34,18 @@ export interface ICreateCommentCommand {
     content: string,
     replyTo?: string,
 }
-function DetailPost(props: IPostProp) {
+function DetailPost(props: IProp) {
     const [userLike, setUserLiked] = useState(false);
+    const [userLikeNum, setUserLikedNum] = useState(props.likeNum);
     const toggleLikePost = () => {
         if (userLike) {
             HttpClient.removeLikePost(props.id)
             setUserLiked(false);
+            setUserLikedNum(userLikeNum - 1)
         } else {
             HttpClient.addLikePost(props.id);
             setUserLiked(true);
+            setUserLikedNum(userLikeNum + 1)
         }
     }
 
@@ -59,7 +64,7 @@ function DetailPost(props: IPostProp) {
             </div>
             <div style={{ marginTop: '4px', paddingTop: '4px' }}>{props.content}</div>
             <div style={{ marginTop: '8px', marginBottom: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <LikeFilled style={{ fontSize: '24px', color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLikePost() }} />
+                <div className="icon-num-vertical"><LikeFilled style={{ fontSize: '24px', color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLikePost() }} /><div>{userLikeNum}</div></div>
                 <DislikeFilled style={{ fontSize: '24px' }} />
             </div>
             <div style={{ borderTop: '1px solid #f0f0f0', marginTop: '4px', paddingTop: '4px' }}>

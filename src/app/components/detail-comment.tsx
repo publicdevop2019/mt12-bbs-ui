@@ -18,13 +18,16 @@ interface IProp extends IComment {
 }
 function DetailComment(props: IProp) {
     const [userLike, setUserLiked] = useState(false);
+    const [userLikeNum, setUserLikedNum] = useState(props.likeNum);
     const toggleLikeComment = () => {
         if (userLike) {
             HttpClient.removeLikeComment(props.id)
             setUserLiked(false);
+            setUserLikedNum(userLikeNum - 1)
         } else {
             HttpClient.addLikeComment(props.id);
             setUserLiked(true);
+            setUserLikedNum(userLikeNum + 1);
         }
     }
     return (
@@ -34,8 +37,9 @@ function DetailComment(props: IProp) {
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, marginLeft: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <div>{props.publishedBy}</div>
-                        <div>
-                            <LikeFilled style={{ color: userLike ? '#1DA57A' : 'inherit', paddingRight: '8px' }} onClick={() => { toggleLikeComment() }} />
+                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                            <LikeFilled style={{ color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLikeComment() }} />
+                            <div style={{ paddingRight: '8px' }}>{userLikeNum}</div>
                             <DislikeFilled style={{ paddingRight: '24px' }} />
                             <MessageOutlined onClick={(ev) => { props.reply(props.id); ev.stopPropagation() }} />
                         </div>
