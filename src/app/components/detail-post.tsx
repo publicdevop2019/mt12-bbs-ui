@@ -44,22 +44,28 @@ function DetailPost(props: IProp) {
         if (userLike) {
             HttpClient.removeLikePost(props.id)
             setUserLiked(false);
-            setUserLikedNum(userLikeNum - 1)
+            setUserLikedNum(userLikeNum - 1 < 0 ? 0 : userLikeNum - 1)
         } else {
             HttpClient.addLikePost(props.id);
             setUserLiked(true);
+            setUserDisliked(false);
             setUserLikedNum(userLikeNum + 1)
+            if (userDislike)
+                setUserDislikedNum(userDislikeNum - 1 < 0 ? 0 : userDislikeNum - 1)
         }
     }
     const toggleDislikePost = () => {
         if (userDislike) {
             HttpClient.removeDislikePost(props.id)
             setUserDisliked(false);
-            setUserDislikedNum(userDislikeNum - 1)
+            setUserDislikedNum(userDislikeNum - 1 < 0 ? 0 : userDislikeNum - 1)
         } else {
             HttpClient.addDislikePost(props.id);
             setUserDisliked(true);
+            setUserLiked(false);
             setUserDislikedNum(userDislikeNum + 1)
+            if (userLike)
+                setUserLikedNum(userLikeNum - 1 < 0 ? 0 : userLikeNum - 1)
         }
     }
 

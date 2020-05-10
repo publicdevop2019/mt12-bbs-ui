@@ -21,26 +21,32 @@ function DetailComment(props: IProp) {
     const [userLikeNum, setUserLikedNum] = useState(props.likeNum);
     const [userDislike, setUserDisliked] = useState(false);
     const [userDislikeNum, setUserDislikedNum] = useState(props.dislikeNum);
-    const toggleLikeComment = () => {
+    const toggleLike = () => {
         if (userLike) {
             HttpClient.removeLikeComment(props.id)
             setUserLiked(false);
-            setUserLikedNum(userLikeNum - 1)
+            setUserLikedNum(userLikeNum - 1 < 0 ? 0 : userLikeNum - 1)
         } else {
             HttpClient.addLikeComment(props.id);
             setUserLiked(true);
-            setUserLikedNum(userLikeNum + 1);
+            setUserDisliked(false);
+            setUserLikedNum(userLikeNum + 1)
+            if (userDislike)
+                setUserDislikedNum(userDislikeNum - 1 < 0 ? 0 : userDislikeNum - 1)
         }
     }
-    const toggleDislikeComment = () => {
+    const toggleDislike = () => {
         if (userDislike) {
             HttpClient.removeDislikeComment(props.id)
             setUserDisliked(false);
-            setUserDislikedNum(userDislikeNum - 1)
+            setUserDislikedNum(userDislikeNum - 1 < 0 ? 0 : userDislikeNum - 1)
         } else {
             HttpClient.addDislikeComment(props.id);
             setUserDisliked(true);
-            setUserDislikedNum(userDislikeNum + 1);
+            setUserLiked(false);
+            setUserDislikedNum(userDislikeNum + 1)
+            if (userLike)
+                setUserLikedNum(userLikeNum - 1 < 0 ? 0 : userLikeNum - 1)
         }
     }
     return (
@@ -51,9 +57,9 @@ function DetailComment(props: IProp) {
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <div>{props.publishedBy}</div>
                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                            <LikeFilled style={{ color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLikeComment() }} />
+                            <LikeFilled style={{ color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLike() }} />
                             <div style={{ paddingRight: '8px' }}>{userLikeNum}</div>
-                            <DislikeFilled style={{ color: userDislike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleDislikeComment() }} />
+                            <DislikeFilled style={{ color: userDislike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleDislike() }} />
                             <div style={{ paddingRight: '24px' }}>{userDislikeNum}</div>
                             <MessageOutlined onClick={(ev) => { props.reply(props.id); ev.stopPropagation() }} />
                         </div>
