@@ -19,6 +19,8 @@ interface IProp extends IComment {
 function DetailComment(props: IProp) {
     const [userLike, setUserLiked] = useState(false);
     const [userLikeNum, setUserLikedNum] = useState(props.likeNum);
+    const [userDislike, setUserDisliked] = useState(false);
+    const [userDislikeNum, setUserDislikedNum] = useState(props.dislikeNum);
     const toggleLikeComment = () => {
         if (userLike) {
             HttpClient.removeLikeComment(props.id)
@@ -28,6 +30,17 @@ function DetailComment(props: IProp) {
             HttpClient.addLikeComment(props.id);
             setUserLiked(true);
             setUserLikedNum(userLikeNum + 1);
+        }
+    }
+    const toggleDislikeComment = () => {
+        if (userDislike) {
+            HttpClient.removeDislikeComment(props.id)
+            setUserDisliked(false);
+            setUserDislikedNum(userDislikeNum - 1)
+        } else {
+            HttpClient.addDislikeComment(props.id);
+            setUserDisliked(true);
+            setUserDislikedNum(userDislikeNum + 1);
         }
     }
     return (
@@ -40,7 +53,8 @@ function DetailComment(props: IProp) {
                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                             <LikeFilled style={{ color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLikeComment() }} />
                             <div style={{ paddingRight: '8px' }}>{userLikeNum}</div>
-                            <DislikeFilled style={{ paddingRight: '24px' }} />
+                            <DislikeFilled style={{ color: userDislike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleDislikeComment() }} />
+                            <div style={{ paddingRight: '24px' }}>{userDislikeNum}</div>
                             <MessageOutlined onClick={(ev) => { props.reply(props.id); ev.stopPropagation() }} />
                         </div>
                     </div>

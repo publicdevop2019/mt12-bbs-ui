@@ -15,6 +15,7 @@ export interface IPost {
     content: string,
     publishedBy: string,
     likeNum: number
+    dislikeNum: number
 }
 interface IProp extends IPost {
     reply: (commentId: string) => void
@@ -26,8 +27,8 @@ export interface IComment {
     publishedBy: string,
     content: string,
     likeNum: number,
+    dislikeNum: number,
     replyTo?: string,
-    liked?: boolean,
     delete: (id: string) => void,
 }
 export interface ICreateCommentCommand {
@@ -36,7 +37,9 @@ export interface ICreateCommentCommand {
 }
 function DetailPost(props: IProp) {
     const [userLike, setUserLiked] = useState(false);
+    const [userDislike, setUserDisliked] = useState(false);
     const [userLikeNum, setUserLikedNum] = useState(props.likeNum);
+    const [userDislikeNum, setUserDislikedNum] = useState(props.dislikeNum);
     const toggleLikePost = () => {
         if (userLike) {
             HttpClient.removeLikePost(props.id)
@@ -46,6 +49,17 @@ function DetailPost(props: IProp) {
             HttpClient.addLikePost(props.id);
             setUserLiked(true);
             setUserLikedNum(userLikeNum + 1)
+        }
+    }
+    const toggleDislikePost = () => {
+        if (userDislike) {
+            HttpClient.removeDislikePost(props.id)
+            setUserDisliked(false);
+            setUserDislikedNum(userDislikeNum - 1)
+        } else {
+            HttpClient.addDislikePost(props.id);
+            setUserDisliked(true);
+            setUserDislikedNum(userDislikeNum + 1)
         }
     }
 
@@ -65,7 +79,7 @@ function DetailPost(props: IProp) {
             <div style={{ marginTop: '4px', paddingTop: '4px' }}>{props.content}</div>
             <div style={{ marginTop: '8px', marginBottom: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <div className="icon-num-vertical"><LikeFilled style={{ fontSize: '24px', color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLikePost() }} /><div>{userLikeNum}</div></div>
-                <DislikeFilled style={{ fontSize: '24px' }} />
+                <div className="icon-num-vertical"><DislikeFilled style={{ fontSize: '24px', color: userDislike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleDislikePost() }} /><div>{userDislikeNum}</div></div>
             </div>
             <div style={{ borderTop: '1px solid #f0f0f0', marginTop: '4px', paddingTop: '4px' }}>
                 {props.commentList && props.commentList.length !== 0 && props.commentList.map((e, index) =>

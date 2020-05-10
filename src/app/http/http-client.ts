@@ -89,4 +89,16 @@ export class HttpClient {
     public static async removeLikeComment(commentId: string) {
         await axios.delete(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId + '/likes');
     }
+    public static async addDislikePost(postId: string) {
+        await axios.post(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId + '/dislikes');
+    }
+    public static async removeDislikePost(postId: string) {
+        await axios.delete(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId + '/dislikes');
+    }
+    public static async addDislikeComment(commentId: string) {
+        await axios.post(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId + '/dislikes');
+    }
+    public static async removeDislikeComment(commentId: string) {
+        await axios.delete(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId + '/dislikes');
+    }
 }

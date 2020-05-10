@@ -101,7 +101,7 @@ export class App extends Component<any, IState>{
       if (this.httpCount === 0)
         this.setState({ httpInProgress: false });
       if (error.request.status === 400) {
-        if ((error.config.url as string).indexOf('/likes') === -1)
+        if ((error.config.url as string).indexOf('/likes') === -1 && (error.config.url as string).indexOf('/dislikes') === -1)
           message.warn(i18n.t('NET_BAD_REQUEST'))
       } else if (error.request.status === 500 || error.request.status === 503) {
         message.warn(i18n.t('NET_INTERNAL_ERROR'))
