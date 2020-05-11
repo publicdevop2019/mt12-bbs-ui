@@ -9,7 +9,7 @@ export interface IPostBrief {
     topic: string,
     title: string,
     publishedAt: string,
-    publishedBy: string,
+    publisherId: string,
     comments: number,
     views: number,
     editable?: boolean,
@@ -19,12 +19,12 @@ export function CardPost(props: IPostBrief) {
     return (
         <>
             <Link to={"/post/" + props.id}>
-                <div style={{ border: '1px solid #f0f0f0', display: 'flex', flexDirection: 'row', padding: '4px 8px' }}>
-                    <img alt="example" src={props.imageUrl} style={{ height: '100px', width: '100px' }} />
+                <div style={{ border: '1px solid #f0f0f0', display: 'flex', flexDirection: 'row', padding: '4px 8px', minHeight: '100px' }}>
+                    {props.imageUrl ? <img alt="example" src={props.imageUrl} style={{ height: '100px', width: '100px' }} /> : null}
                     <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingLeft: '8px' }}>
-                        <div style={{ flex: 1 }}>{props.title}</div>
+                        <div style={{ flex: 1, fontSize: '24px', fontWeight: 600 }}>{props.title}</div>
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <div style={{ fontSize: '16px', fontWeight: 500 }}>{props.publishedBy}</div>
+                            <div style={{ fontSize: '16px', fontWeight: 500 }}>{props.publisherId}</div>
                             <div style={{ display: 'flex', flexDirection: 'row' }}>
                                 <div style={{ paddingRight: '8px' }}>{moment(props.publishedAt).fromNow()}</div>
                                 <div style={{ paddingRight: '8px' }}><span style={{ paddingRight: '4px' }}>{props.comments}</span><CommentOutlined /></div>
