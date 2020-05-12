@@ -1,8 +1,8 @@
 import { Button, Input, Select } from "antd";
-import TextArea from "antd/lib/input/TextArea";
 import i18n from 'i18next';
 import React, { Component } from "react";
 import { RouteComponentProps } from 'react-router';
+import { RichTextEditor } from "../components/rich-text-editor";
 import { HttpClient, ICreatePostCommand } from "../http/http-client";
 
 const { Option } = Select;
@@ -63,8 +63,7 @@ export class NewPost extends Component<IProp, IState>{
                 </Select>
                 <Input placeholder={i18n.t('ADD_POST_TITLE')} style={{ marginBottom: '8px' }} value={this.state.formPost.title} disabled={this.props.update}
                     onChange={(e) => this.handleInputChange(e.target.value, 'title')} />
-                <TextArea rows={4} value={this.state.formPost.content}
-                    onChange={(e) => this.handleInputChange(e.target.value, 'content')} />
+                <RichTextEditor/>
                 {
                     this.props.update ?
                         <Button type="primary" style={{ flex: 1, marginTop: '8px' }} onClick={() => HttpClient.updatePost(this.convertToPost(), this.props.match.params.postId)}>{i18n.t('UPDATE_POST')}</Button>
