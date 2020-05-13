@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^19.0.0",
-    "@ckeditor/ckeditor5-react": "^2.1.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -31,6 +29,8 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "rxjs": "^6.5.5",
+    "slate": "^0.58.1",
+    "slate-react": "^0.58.1",
     "typescript": "^3.7.5"
   },
   "scripts": {
@@ -59,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "@types/draft-js": "^0.10.40",
     "@types/rx": "^4.1.1"
   }
 }

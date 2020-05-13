@@ -40,7 +40,7 @@ export class HttpClient {
     public static async createPost(post: ICreatePostCommand) {
         const response = await axios.post(process.env.REACT_APP_SERVER_URL + '/private/posts', post);
         message.success(i18n.t('NET_SUCCESS'))
-        return response.headers['Location'] as string;
+        return response.headers['location'] as string;
     }
     public static async updatePost(post: ICreatePostCommand, postId: string) {
         await axios.put(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId, post);
@@ -53,18 +53,18 @@ export class HttpClient {
     public static async createComment(postId: string, comment: ICreateCommentCommand) {
         const response = await axios.post(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId + '/comments', comment);
         message.success(i18n.t('NET_SUCCESS'))
-        return response.headers['Location'] as string
+        return response.headers['location'] as string
     }
 
     public static async deletePost(postId: string) {
         const response = await axios.delete(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId);
         message.success(i18n.t('NET_SUCCESS'))
-        return response.headers['Location'] as string
+        return response.headers['location'] as string
     }
     public static async deleteComment(commentId: string) {
         const response = await axios.delete(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId);
         message.success(i18n.t('NET_SUCCESS'))
-        return response.headers['Location'] as string
+        return response.headers['location'] as string
     }
     public static async getToken(code: string) {
         const header = {
@@ -100,5 +100,11 @@ export class HttpClient {
     }
     public static async removeDislikeComment(commentId: string) {
         await axios.delete(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId + '/dislikes');
+    }
+    public static async uploadImage(file: File) {
+        const formData: FormData = new FormData();
+        formData.append('file', file, file.name);
+        const response = await axios.post(process.env.REACT_APP_UPLOAD_SVC + '/files', formData);
+        return process.env.REACT_APP_UPLOAD_SVC + '/files/' + response.headers['location'] as string;
     }
 }

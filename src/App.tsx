@@ -85,8 +85,12 @@ export class App extends Component<any, IState>{
     axios.interceptors.request.use((config) => {
       this.httpCount++;
       this.setState({ httpInProgress: true });
-      if (config.url && config.url.indexOf('private') > -1)
+      if (config.url && config.url.indexOf('private') > -1) {
         config.headers = { ...config.headers, Authorization: `Bearer ` + this.state.jwt }
+      }
+      else if (config.url && config.method && config.url.indexOf('files') > -1 && config.method.toUpperCase() === 'POST') {
+        config.headers = { ...config.headers, Authorization: `Bearer ` + this.state.jwt }
+      }
       return config;
     }, function (error) {
       return Promise.reject(error);
