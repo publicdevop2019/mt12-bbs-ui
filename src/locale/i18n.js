@@ -37,7 +37,8 @@ const resources = {
       "URL_NOT_FOUND": "Url not found",
       "END_OF_LIST": "~~ End Of List ~~",
       "YOU": "You",
-      "USER_MODIFIED":"(Edited)"
+      "USER_MODIFIED":"(Edited)",
+      "DARK_THEME":"Dark Theme"
     }
   },
   zhHans: {
@@ -75,7 +76,8 @@ const resources = {
       "URL_NOT_FOUND": "资源未找到",
       "END_OF_LIST": "~~ 到底喽 ~~",
       "YOU": "你",
-      "USER_MODIFIED":"(已修改)"
+      "USER_MODIFIED":"(已修改)",
+      "DARK_THEME":"夜间模式"
     }
   }
 };

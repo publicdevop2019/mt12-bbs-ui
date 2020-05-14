@@ -13,6 +13,7 @@ import HomePage from './app/pages/home';
 import NotFound from './app/pages/not-found';
 import ViewPost from './app/pages/view-post';
 import './locale/i18n';
+import { ThemeContext } from './app/context/theme.context';
 const NewPost = lazy(() => import('./app/pages/new-post'));
 const MyPosts = lazy(() => import('./app/pages/my-posts'));
 const MyComments = lazy(() => import('./app/pages/my-comments'));
@@ -21,6 +22,7 @@ const Account = lazy(() => import('./app/pages/account'));
 
 interface IState {
   jwt: string,
+  theme: string,
   httpInProgress: boolean,
   menu: string,
 }
@@ -30,6 +32,7 @@ export class App extends Component<any, IState>{
     super(props);
     this.state = {
       jwt: localStorage.getItem('jwt') || '',
+      theme: localStorage.getItem('theme') || 'light',
       menu: window.location.pathname.replace('/', ''),
       httpInProgress: false
     }
@@ -40,50 +43,58 @@ export class App extends Component<any, IState>{
     this.setState({ jwt: next });
     localStorage.setItem('jwt', next);
   }
+  updateTheme(next: string) {
+    this.setState({ theme: next });
+    localStorage.setItem('theme', next);
+  }
   clearJwt() {
     this.setState({ jwt: '' });
     localStorage.removeItem('jwt')
   }
   render() {
     return (
-      <AuthContext.Provider value={{ jwt: this.state.jwt, clearJwt: () => { this.clearJwt() }, updateJwt: (next) => { this.updateJwt(next) } }}>
-        <Router>
-          {this.state.httpInProgress ? <ProgressBar /> : null}
-          <div style={{ display: 'flex', flexDirection: 'row', fontSize: '14px', lineHeight: '46px', justifyContent: 'space-around' }}>
-            <Link to="/home"> <div onClick={() => { this.setState({ menu: 'home' }) }} className={this.state.menu === 'home' ? 'menu-selected' : 'menu-selected-not'} style={{ padding: '0px 8px' }}>
-              <span><ReadOutlined style={{ paddingRight: '8px' }} /></span><span>{i18n.t('HOME')}</span></div></Link>
-            <Link to="/newPost"> <div onClick={() => { this.setState({ menu: 'newPost' }) }} className={this.state.menu === 'newPost' ? 'menu-selected' : 'menu-selected-not'} style={{ padding: '0px 8px' }}>
-              <span><EditOutlined style={{ paddingRight: '8px' }} /></span><span>{i18n.t('NEW_POST')}</span></div></Link>
-            <Link to="/account"> <div onClick={() => { this.setState({ menu: 'account' }) }} className={this.state.menu === 'account' ? 'menu-selected' : 'menu-selected-not'} style={{ padding: '0px 8px' }}>
-              <span><SettingOutlined style={{ paddingRight: '8px' }} /></span><span>{i18n.t('ACCOUNT')}</span></div></Link>
-          </div>
-          <Suspense fallback={<div className="spinner"><Spin /></div>}>
-            <Switch>
-              <Route path="/home">
-                <HomePage />
-              </Route>
-              <Route path="/post/*" component={ViewPost} />
-              {/* lazy load */}
-              <PrivateRoute jwt={this.state.jwt} path="/newPost" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={(props) => <NewPost {...props} />} />
-              <PrivateRoute jwt={this.state.jwt} path="/edit/:postId" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={(props) => <NewPost update={true} {...props} />} />
-              <PrivateRoute jwt={this.state.jwt} path="/account/posts" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={() => <MyPosts />} />
-              <PrivateRoute jwt={this.state.jwt} path="/account/comments" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={() => <MyComments />} />
-              <Route exact path="/account" component={Account} />
-              {/* lazy load */}
-              <Route exact path="/">
-                <Redirect
-                  to={{
-                    pathname: "/home",
-                  }}
-                />
-              </Route>
-              <Route path="*">
-                <NotFound />
-              </Route>
-            </Switch>
-          </Suspense>
-        </Router>
-      </AuthContext.Provider>
+      <div className={this.state.theme === 'dark' ? 'dark-theme' : undefined} style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <ThemeContext.Provider value={{ theme: this.state.theme, updateTheme: (next) => { this.updateTheme(next) } }}>
+          <AuthContext.Provider value={{ jwt: this.state.jwt, clearJwt: () => { this.clearJwt() }, updateJwt: (next) => { this.updateJwt(next) } }}>
+            <Router>
+              {this.state.httpInProgress ? <ProgressBar /> : null}
+              <div style={{ display: 'flex', flexDirection: 'row', fontSize: '14px', lineHeight: '46px', justifyContent: 'space-around' }}>
+                <Link to="/home"> <div onClick={() => { this.setState({ menu: 'home' }) }} className={this.state.menu === 'home' ? 'menu-selected' : 'menu-selected-not'} style={{ padding: '0px 8px' }}>
+                  <span><ReadOutlined style={{ paddingRight: '8px' }} /></span><span>{i18n.t('HOME')}</span></div></Link>
+                <Link to="/newPost"> <div onClick={() => { this.setState({ menu: 'newPost' }) }} className={this.state.menu === 'newPost' ? 'menu-selected' : 'menu-selected-not'} style={{ padding: '0px 8px' }}>
+                  <span><EditOutlined style={{ paddingRight: '8px' }} /></span><span>{i18n.t('NEW_POST')}</span></div></Link>
+                <Link to="/account"> <div onClick={() => { this.setState({ menu: 'account' }) }} className={this.state.menu === 'account' ? 'menu-selected' : 'menu-selected-not'} style={{ padding: '0px 8px' }}>
+                  <span><SettingOutlined style={{ paddingRight: '8px' }} /></span><span>{i18n.t('ACCOUNT')}</span></div></Link>
+              </div>
+              <Suspense fallback={<div className="spinner"><Spin /></div>}>
+                <Switch>
+                  <Route path="/home">
+                    <HomePage />
+                  </Route>
+                  <Route path="/post/*" component={ViewPost} />
+                  {/* lazy load */}
+                  <PrivateRoute jwt={this.state.jwt} path="/newPost" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={(props) => <NewPost {...props} />} />
+                  <PrivateRoute jwt={this.state.jwt} path="/edit/:postId" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={(props) => <NewPost update={true} {...props} />} />
+                  <PrivateRoute jwt={this.state.jwt} path="/account/posts" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={() => <MyPosts />} />
+                  <PrivateRoute jwt={this.state.jwt} path="/account/comments" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={() => <MyComments />} />
+                  <Route exact path="/account" component={Account} />
+                  {/* lazy load */}
+                  <Route exact path="/">
+                    <Redirect
+                      to={{
+                        pathname: "/home",
+                      }}
+                    />
+                  </Route>
+                  <Route path="*">
+                    <NotFound />
+                  </Route>
+                </Switch>
+              </Suspense>
+            </Router>
+          </AuthContext.Provider>
+        </ThemeContext.Provider>
+      </div>
     );
   }
   private configAxios() {

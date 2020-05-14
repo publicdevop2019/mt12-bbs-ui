@@ -18,7 +18,7 @@
   border-bottom-color: inherit !important;
 }
 .menu-selected-not{
-  color: rgba(0, 0, 0, 0.65) !important;
+  color: rgba(0, 0, 0, 0.65);
   border-bottom:  2px solid transparent !important;
 }
 .comment-card{
@@ -71,3 +71,10 @@ $animation-duration: 2000ms;
   justify-content: center;
   align-items: center;
 }
+.dark-theme {
+  background-color: #001529;   
+  color: white;
+ }
+.dark-theme .menu-selected-not{
+  color: white;
+ }
