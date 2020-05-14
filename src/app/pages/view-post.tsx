@@ -33,8 +33,10 @@ export class ViewPost extends Component<any, IState>{
         return (
             this.state.postDetails ?
                 <>
-                    <NavBack/>
-                    <div onClick={() => this.setState({ openComment: false })}>
+                    <NavBack />
+                    <div
+                        onClick={() => this.state.openComment && this.setState({ openComment: false })}
+                    >
                         <DetailPost {...this.state.postDetails!} reply={(e) => this.setState({ openComment: true, replyTo: e })} commentList={this.state.commentList} />
                     </div>
                     <AddComment

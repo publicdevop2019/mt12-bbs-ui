@@ -5,13 +5,25 @@ import { RouteComponentProps } from 'react-router';
 import { RichTextEditor } from "../components/rich-text-editor";
 import { HttpClient, ICreatePostCommand } from "../http/http-client";
 
+const initialValue = [
+    {
+        type: 'paragraph',
+        children: [
+            {
+                text:
+                    '',
+            },
+        ],
+    }
+]
+
 const { Option } = Select;
 interface IState {
     formPost: {
         topic: string,
         title: string,
-        content: string
-    }
+    },
+    wysiwyg: any
 }
 interface RouteParams {
     postId: string
@@ -27,14 +39,14 @@ export class NewPost extends Component<IProp, IState>{
             formPost: {
                 topic: '',
                 title: '',
-                content: ''
-            }
+            },
+            wysiwyg: initialValue
         }
     }
     componentDidMount() {
         if (this.props.update) {
             HttpClient.getPostDetail(this.props.match.params.postId).then(next => {
-                this.setState({ formPost: { topic: next.topic, title: next.title, content: next.content } })
+                this.setState({ formPost: { topic: next.topic, title: next.title }, wysiwyg: JSON.parse(next.content) })
             })
         }
 
@@ -43,7 +55,7 @@ export class NewPost extends Component<IProp, IState>{
         let a = {
             topic: this.state.formPost.topic,
             title: this.state.formPost.title,
-            content: this.state.formPost.content
+            content: JSON.stringify(this.state.wysiwyg)
         }
         return a as ICreatePostCommand
     }
@@ -63,7 +75,7 @@ export class NewPost extends Component<IProp, IState>{
                 </Select>
                 <Input placeholder={i18n.t('ADD_POST_TITLE')} style={{ marginBottom: '8px' }} value={this.state.formPost.title} disabled={this.props.update}
                     onChange={(e) => this.handleInputChange(e.target.value, 'title')} />
-                <RichTextEditor/>
+                <RichTextEditor value={this.state.wysiwyg} setValue={(value) => { this.setState({ wysiwyg: value }) }} />
                 {
                     this.props.update ?
                         <Button type="primary" style={{ flex: 1, marginTop: '8px' }} onClick={() => HttpClient.updatePost(this.convertToPost(), this.props.match.params.postId)}>{i18n.t('UPDATE_POST')}</Button>

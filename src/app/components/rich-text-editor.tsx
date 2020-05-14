@@ -1,23 +1,31 @@
 import { FileImageFilled } from '@ant-design/icons';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { createEditor, Transforms } from 'slate';
 import { Editable, Slate, useEditor, useFocused, useSelected, withReact } from 'slate-react';
 import { HttpClient } from '../http/http-client';
-
-export const RichTextEditor = () => {
-    const [value, setValue] = useState(initialValue as any)
+interface IProp {
+    value: any,
+    setValue?: (value: any) => void,
+}
+export const RichTextEditor = (props: IProp) => {
     const editor = useMemo(() => withImages(withReact(createEditor())), [])
 
     return (
+        <Slate editor={editor} value={props.value} onChange={value => (typeof props.setValue === "function") && props.setValue(value)}>
+            {
+                typeof props.setValue === "function" ?
+                    <div id="tool-bar" style={{ marginBottom: '4px' }}>
+                        <InsertImageButton />
+                    </div>
+                    :
+                    null
+            }
 
-        <Slate editor={editor} value={value} onChange={value => setValue(value)}>
-            <div id="tool-bar" style={{ marginBottom: '4px' }}>
-                <InsertImageButton />
-            </div>
             <div style={{ border: '1px solid #d9d9d9' }}>
                 <Editable
                     renderElement={props => <Element {...props} />}
                     placeholder="Enter something here..."
+                    readOnly={typeof props.setValue !== "function"}
                 />
             </div>
         </Slate>
@@ -84,15 +92,3 @@ const InsertImageButton = () => {
     )
 }
 
-
-const initialValue = [
-    {
-        type: 'paragraph',
-        children: [
-            {
-                text:
-                    '',
-            },
-        ],
-    }
-]

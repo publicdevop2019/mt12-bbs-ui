@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import '../../locale/i18n';
 import { HttpClient } from '../http/http-client';
 import DetailComment from './detail-comment';
+import { RichTextEditor } from './rich-text-editor';
 
 export interface IPost {
     id: string,
@@ -36,6 +37,7 @@ export interface ICreateCommentCommand {
     replyTo?: string,
 }
 function DetailPost(props: IProp) {
+    const [wysiwyg] = useState(JSON.parse(props.content));
     const [userLike, setUserLiked] = useState(false);
     const [userDislike, setUserDisliked] = useState(false);
     const [userLikeNum, setUserLikedNum] = useState(props.likeNum);
@@ -82,7 +84,9 @@ function DetailPost(props: IProp) {
                     <div>{moment(props.publishedAt).fromNow()}</div>
                 </div>
             </div>
-            <div style={{ marginTop: '4px', paddingTop: '4px' }}>{props.content}</div>
+
+            <RichTextEditor value={wysiwyg} />
+
             <div style={{ marginTop: '8px', marginBottom: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <div className="icon-num-vertical"><LikeFilled style={{ fontSize: '24px', color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLikePost() }} /><div>{userLikeNum}</div></div>
                 <div className="icon-num-vertical"><DislikeFilled style={{ fontSize: '24px', color: userDislike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleDislikePost() }} /><div>{userDislikeNum}</div></div>
