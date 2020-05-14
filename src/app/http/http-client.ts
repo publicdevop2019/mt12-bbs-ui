@@ -16,8 +16,8 @@ export interface ITokenResponse {
     scope?: string;
     uid?: string;
 }
-export const POST_PAGE_SIZE = 10;
-const COMMENT_PAGE_SIZE = 10;
+export const POST_PAGE_SIZE = 1;
+export const COMMENT_PAGE_SIZE = 1;
 export class HttpClient {
     public static async getPostByTopic(category: string, pageNum: number) {
         const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/public/posts?topic=${category}&pageNum=${pageNum}&pageSize=${POST_PAGE_SIZE}&sortBy=id&sortOrder=asc`);

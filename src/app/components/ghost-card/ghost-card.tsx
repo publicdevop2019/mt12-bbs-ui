@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { Component } from 'react';
 import './ghost-card.scss';
 interface IProp {
     callback: () => Promise<void> | void
@@ -6,20 +6,27 @@ interface IProp {
 const visibilityConfig = {
     threshold: 0
 };
-export function GhostDiv(prop: IProp) {
-    const divRef: any = useRef(null);
-    useEffect(() => {
+export class GhostDiv extends Component<IProp, any>{
+    private divRef: any;
+    constructor(props: IProp) {
+        super(props);
+        this.divRef = React.createRef();
+    }
+    componentDidMount() {
         let observer = new IntersectionObserver((entries, self) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    prop.callback()
+                    this.props.callback()
                 }
             });
         }, visibilityConfig);
-        observer.observe(divRef.current);
-    }, [divRef]);
-    return (
-        <div ref={divRef} className="ghost-card">
-        </div>
-    )
+        observer.observe(this.divRef.current);
+
+    }
+    render() {
+        return (
+            <div ref={this.divRef} className="ghost-card">
+            </div>
+        )
+    }
 }
