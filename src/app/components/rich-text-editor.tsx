@@ -41,9 +41,18 @@ const withImages = (editor: any) => {
 }
 
 const insertImage = (editor: any, url: string, alt: string) => {
-    const text = { text: '' }
-    const image = { type: 'image', url, alt, children: [text] }
+    const image = { type: 'image', url, alt, children: [{ text: '' }] }
+    const text = {
+        type: 'paragraph',
+        children: [
+            {
+                text:
+                    '',
+            },
+        ],
+    }
     Transforms.insertNodes(editor, image)
+    Transforms.insertNodes(editor, text)
 }
 
 const Element = (props: any) => {
@@ -61,15 +70,17 @@ const ImageElement = (props: any) => {
     const selected = useSelected()
     const focused = useFocused()
     return (
-        <div {...props.attributes}>
-            <div contentEditable={false}>
-                <img
-                    src={props.element.url} alt={props.element.alt}
-                    style={{ display: 'block', maxWidth: '100%', maxHeight: '20em', boxShadow: selected && focused ? '0 0 0 3px #B4D5FF' : 'none' }}
-                />
+        <>
+            <div {...props.attributes}>
+                <div contentEditable={false}>
+                    <img
+                        src={props.element.url} alt={props.element.alt}
+                        style={{ display: 'block', maxWidth: '100%', maxHeight: '20em', boxShadow: selected && focused ? '0 0 0 3px #B4D5FF' : 'none' }}
+                    />
+                </div>
+                {props.children}
             </div>
-            {props.children}
-        </div>
+        </>
     )
 }
 
