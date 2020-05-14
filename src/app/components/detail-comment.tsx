@@ -56,13 +56,17 @@ function DetailComment(props: IProp) {
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, marginLeft: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <div>{props.publishedBy}</div>
-                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                            <LikeFilled style={{ color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLike() }} />
-                            <div style={{ paddingRight: '8px' }}>{userLikeNum}</div>
-                            <DislikeFilled style={{ color: userDislike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleDislike() }} />
-                            <div style={{ paddingRight: '24px' }}>{userDislikeNum}</div>
-                            <MessageOutlined onClick={(ev) => { props.reply(props.id); ev.stopPropagation() }} />
-                        </div>
+                        {props.id !== '-1' ?
+                            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                <LikeFilled style={{ color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLike() }} />
+                                <div style={{ paddingRight: '8px' }}>{userLikeNum}</div>
+                                <DislikeFilled style={{ color: userDislike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleDislike() }} />
+                                <div style={{ paddingRight: '24px' }}>{userDislikeNum}</div>
+                                <MessageOutlined onClick={(ev) => { props.reply(props.id); ev.stopPropagation() }} />
+                            </div>
+                            : null
+                        }
+
                     </div>
                     <div>{moment(props.publishedAt).fromNow()}</div>
                 </div>

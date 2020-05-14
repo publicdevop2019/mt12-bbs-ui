@@ -10,7 +10,7 @@ export interface IAddComment {
     commentFlag: boolean,
     openComment: () => void,
     createComment: (postId: string, comment: ICreateCommentCommand) => Promise<string>;
-    refreshCallback: () => void,
+    refreshCallback: (tobe: ICreateCommentCommand) => void,
     replyTo: string | undefined,
 }
 function AddComment(props: IAddComment) {
@@ -22,8 +22,9 @@ function AddComment(props: IAddComment) {
         }
     }, [props.commentFlag, props.replyTo]);
     const addComment = () => {
-        props.createComment(props.postId, { replyTo: props.replyTo ? props.replyTo : null, content: textInput.current.input.value } as ICreateCommentCommand).then(next => {
-            props.refreshCallback();
+        const tobe = { replyTo: props.replyTo ? props.replyTo : null, content: textInput.current.input.value } as ICreateCommentCommand
+        props.createComment(props.postId, tobe).then(next => {
+            props.refreshCallback(tobe);
         })
     }
     return (

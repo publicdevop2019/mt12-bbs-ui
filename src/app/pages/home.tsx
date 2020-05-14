@@ -32,6 +32,8 @@ export class HomePage extends Component<IProp, IState>{
                 this.setState({ eof: true })
                 if (!this.state.postBrief)
                     this.setState({ postBrief: next })
+                if (this.state.postBrief)
+                    this.setState({ ...this.state, postBrief: [...this.state.postBrief!, ...next] })
             } else {
                 if (this.state.postBrief) {
                     this.setState({ postBrief: [...this.state.postBrief!, ...next] })

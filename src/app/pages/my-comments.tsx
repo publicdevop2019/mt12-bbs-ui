@@ -38,6 +38,8 @@ export class MyComments extends Component<IProp, IState> {
                 this.setState({ eof: true })
                 if (!this.state.comments)
                     this.setState({ comments: next })
+                if (this.state.comments)
+                    this.setState({ ...this.state, comments: [...this.state.comments!, ...next] })
             } else {
                 if (this.state.comments) {
                     this.setState({ comments: [...this.state.comments!, ...next] })
