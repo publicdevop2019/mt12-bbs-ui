@@ -9,6 +9,7 @@ interface IState {
     replyTo: string;
     postDetails?: IPost;
     commentList?: IComment[];
+    pageNum: number;
 }
 export class ViewPost extends Component<any, IState>{
     constructor(props: any) {
@@ -16,6 +17,7 @@ export class ViewPost extends Component<any, IState>{
         this.state = {
             openComment: false,
             replyTo: '',
+            pageNum: 0
         }
     }
     componentDidMount() {
@@ -25,7 +27,7 @@ export class ViewPost extends Component<any, IState>{
         this.refreshComment();
     }
     private refreshComment() {
-        HttpClient.getCommentForPost(this.props.match.params[0]).then(next => {
+        HttpClient.getCommentForPost(this.props.match.params[0], this.state.pageNum).then(next => {
             this.setState({ ...this.state, commentList: next })
         })
     }

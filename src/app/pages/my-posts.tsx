@@ -9,17 +9,19 @@ interface IProp {
 }
 interface IState {
     postBrief: IPostBrief[] | undefined,
+    pageNum: number
 }
 export class MyPosts extends Component<IProp, IState> {
     constructor(props: any) {
         super(props)
         this.state = {
             postBrief: undefined,
+            pageNum: 0
         }
     }
     private deletePost(id: string) {
         HttpClient.deletePost(id).then(() => {
-            HttpClient.getPostForUser().then(next => {
+            HttpClient.getPostForUser(this.state.pageNum).then(next => {
                 next.forEach(e => {
                     e.editable = true;
                     e.delete = (id) => { this.deletePost(id) }
@@ -29,7 +31,7 @@ export class MyPosts extends Component<IProp, IState> {
         })
     }
     componentDidMount() {
-        HttpClient.getPostForUser().then(next => {
+        HttpClient.getPostForUser(this.state.pageNum).then(next => {
             next.forEach(e => {
                 e.editable = true;
                 e.delete = (id) => { this.deletePost(id) }

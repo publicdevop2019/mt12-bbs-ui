@@ -1,0 +1,30 @@
+$base-color: rgba(221, 221, 221, 0.644);
+$base-margin: 4px;
+$ghost-color: #ecebebf1;
+$animation-duration: 1000ms; 
+$gradient-offset: 52 + 16; 
+@mixin border-style {
+    border-radius: 4px;
+}
+@mixin background-gradient { 
+  background-image: linear-gradient(90deg, $base-color 0px, $ghost-color 40px, $base-color 80px);
+  background-size: 80vw;
+}
+
+@keyframes ghost-lines { 
+  0%   { background-position: -100px;  }
+  40%  { background-position: 40vw;    }
+  100% { background-position: 60vw;    }
+}
+
+@mixin animate-ghost-line {
+  @include background-gradient;
+  animation: ghost-lines $animation-duration infinite linear;
+}
+.ghost-card{
+    border-radius: 4px;
+    margin: 8px;
+    height: 100px;
+    background-color: rgba(221, 221, 221, 0.644);
+    @include animate-ghost-line;
+}

@@ -35,6 +35,7 @@ const resources = {
       "DELETED": "This comment has been deleted",
       "REDIRECT_URL": "/account",
       "URL_NOT_FOUND": "Url not found",
+      "END_OF_LIST": "~~ End Of List ~~",
     }
   },
   zhHans: {
@@ -70,6 +71,7 @@ const resources = {
       "DELETED": "该评论已被删除",
       "REDIRECT_URL": "/account",
       "URL_NOT_FOUND": "资源未找到",
+      "END_OF_LIST": "~~ 到底喽 ~~",
     }
   }
 };

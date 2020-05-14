@@ -16,24 +16,26 @@ export interface ITokenResponse {
     scope?: string;
     uid?: string;
 }
+export const POST_PAGE_SIZE = 10;
+const COMMENT_PAGE_SIZE = 10;
 export class HttpClient {
-    public static async getPostByTopic(category: string) {
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/public/posts?topic=${category}&pageNum=0&pageSize=99&sortBy=id&sortOrder=asc`);
+    public static async getPostByTopic(category: string, pageNum: number) {
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/public/posts?topic=${category}&pageNum=${pageNum}&pageSize=${POST_PAGE_SIZE}&sortBy=id&sortOrder=asc`);
         return response.data as IPostBrief[];
 
     }
-    public static async getPostForUser() {
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/private/posts?pageNum=0&pageSize=99&sortBy=id&sortOrder=asc');
+    public static async getPostForUser(pageNum: number) {
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/private/posts?pageNum=${pageNum}&pageSize=${POST_PAGE_SIZE}&sortBy=id&sortOrder=asc`);
         return response.data as IPostBrief[];
 
     }
-    public static async getCommentForUser() {
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/private/comments?pageNum=0&pageSize=99&sortBy=id&sortOrder=asc');
+    public static async getCommentForUser(pageNum: number) {
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/private/comments?pageNum=${pageNum}&pageSize=${COMMENT_PAGE_SIZE}&sortBy=id&sortOrder=asc`);
         return response.data as IComment[];
 
     }
-    public static async getCommentForPost(postId: string) {
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/public/posts/${postId}/comments?pageNum=0&pageSize=99&sortBy=id&sortOrder=asc`);
+    public static async getCommentForPost(postId: string, pageNum: number) {
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + `/public/posts/${postId}/comments?pageNum=${pageNum}&pageSize=${COMMENT_PAGE_SIZE}&sortBy=id&sortOrder=asc`);
         return response.data as IComment[];
 
     }

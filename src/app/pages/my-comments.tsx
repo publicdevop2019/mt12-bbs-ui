@@ -11,17 +11,19 @@ interface IProp {
 }
 interface IState {
     comments: IComment[] | undefined,
+    pageNum: number
 }
 export class MyComments extends Component<IProp, IState> {
     constructor(props: any) {
         super(props)
         this.state = {
             comments: undefined,
+            pageNum: 0
         }
     }
     private deleteComment(id: string) {
         HttpClient.deleteComment(id).then(() => {
-            HttpClient.getCommentForUser().then(next => {
+            HttpClient.getCommentForUser(this.state.pageNum).then(next => {
                 next.forEach(e => {
                     e.delete = (id) => { this.deleteComment(id) }
                 });
@@ -30,7 +32,7 @@ export class MyComments extends Component<IProp, IState> {
         })
     }
     componentDidMount() {
-        HttpClient.getCommentForUser().then(next => {
+        HttpClient.getCommentForUser(this.state.pageNum).then(next => {
             next.forEach(e => {
                 e.delete = (id) => { this.deleteComment(id) }
             });
