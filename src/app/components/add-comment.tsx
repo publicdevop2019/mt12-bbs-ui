@@ -34,7 +34,7 @@ function AddComment(props: IAddComment) {
                 props.commentFlag ?
                     (
                         <div style={{ display: 'flex', flexDirection: 'row', margin: '8px' }}>
-                            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', paddingRight: '8px' }}><PlusCircleOutlined /></div>
+                            {/* <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', paddingRight: '8px' }}><PlusCircleOutlined /></div> */}
                             <div style={{ flex: 1, paddingRight: '8px' }}><Input placeholder={props.replyTo ? props.replyTo : t('REPLY_NOW')} ref={textInput} /></div>
                             <div><Button type="primary" onClick={() => { addComment() }}>{t('SEND')}</Button></div>
                         </div>

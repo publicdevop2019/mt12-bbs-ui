@@ -36,10 +36,11 @@ class MyComments extends Component<IProp, IState> {
             });
             if (next.length === 0 || next.length < COMMENT_PAGE_SIZE) {
                 this.setState({ eof: true })
-                if (!this.state.comments)
+                if (!this.state.comments) {
                     this.setState({ comments: next })
-                if (this.state.comments)
+                } else if (this.state.comments) {
                     this.setState({ ...this.state, comments: [...this.state.comments!, ...next] })
+                }
             } else {
                 if (this.state.comments) {
                     this.setState({ comments: [...this.state.comments!, ...next] })

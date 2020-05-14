@@ -45,10 +45,12 @@ export class ViewPost extends Component<any, IState>{
         HttpClient.getCommentForPost(this.props.match.params[0], this.pageNum).then(next => {
             if (next.length === 0 || next.length < COMMENT_PAGE_SIZE) {
                 this.setState({ eof: true })
-                if (!this.state.commentList)
+                if (!this.state.commentList) {
                     this.setState({ ...this.state, commentList: next })
-                if (this.state.commentList)
+                }
+                else if (this.state.commentList) {
                     this.setState({ ...this.state, commentList: [...this.state.commentList!, ...next] })
+                }
             } else {
                 if (this.state.commentList) {
                     this.setState({ ...this.state, commentList: [...this.state.commentList!, ...next] })

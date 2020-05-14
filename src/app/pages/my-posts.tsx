@@ -35,10 +35,12 @@ class MyPosts extends Component<IProp, IState> {
             });
             if (next.length === 0 || next.length < POST_PAGE_SIZE) {
                 this.setState({ eof: true })
-                if (!this.state.postBrief)
+                if (!this.state.postBrief) {
                     this.setState({ postBrief: next })
-                if (this.state.postBrief)
+                }
+                else if (this.state.postBrief) {
                     this.setState({ ...this.state, postBrief: [...this.state.postBrief!, ...next] })
+                }
             } else {
                 if (this.state.postBrief) {
                     this.setState({ postBrief: [...this.state.postBrief!, ...next] })

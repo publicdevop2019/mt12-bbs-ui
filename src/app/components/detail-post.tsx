@@ -6,6 +6,7 @@ import '../../locale/i18n';
 import { HttpClient } from '../http/http-client';
 import DetailComment from './detail-comment';
 import { RichTextEditor } from './rich-text-editor';
+import i18n from '../../locale/i18n';
 
 export interface IPost {
     id: string,
@@ -17,6 +18,7 @@ export interface IPost {
     publishedBy: string,
     likeNum: number
     dislikeNum: number
+    userModified: boolean
 }
 interface IProp extends IPost {
     reply: (commentId: string) => void
@@ -76,7 +78,7 @@ function DetailPost(props: IProp) {
     }
     return (
         <div style={{ margin: '8px' }}>
-            <div style={{ fontWeight: 600, fontSize: '24px', paddingBottom: '8px' }}>{props.title}</div>
+            <div style={{ fontWeight: 600, fontSize: '24px', paddingBottom: '8px' }}>{props.title}{props.userModified ? <span style={{ fontWeight: 400, fontSize: '16px', marginLeft: '8px' }}>{i18n.t('USER_MODIFIED')}</span> : null}</div>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <Avatar size="large" icon={<UserOutlined />} />
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, marginLeft: '20px' }}>

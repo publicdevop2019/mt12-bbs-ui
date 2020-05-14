@@ -37,6 +37,7 @@ const resources = {
       "URL_NOT_FOUND": "Url not found",
       "END_OF_LIST": "~~ End Of List ~~",
       "YOU": "You",
+      "USER_MODIFIED":"(Edited)"
     }
   },
   zhHans: {
@@ -74,6 +75,7 @@ const resources = {
       "URL_NOT_FOUND": "资源未找到",
       "END_OF_LIST": "~~ 到底喽 ~~",
       "YOU": "你",
+      "USER_MODIFIED":"(已修改)"
     }
   }
 };
