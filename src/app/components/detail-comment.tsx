@@ -55,7 +55,7 @@ function DetailComment(props: IProp) {
                 <Avatar size="large" icon={<UserOutlined />} />
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, marginLeft: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <div>{props.publishedBy}</div>
+                        <div>{props.publishedBy === '-1' ? i18n.t('YOU') : props.publishedBy}</div>
                         {props.id !== '-1' ?
                             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                 <LikeFilled style={{ color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLike() }} />
