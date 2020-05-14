@@ -1,22 +1,23 @@
 import { EditOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
-import { message } from 'antd';
+import { message, Spin } from 'antd';
 import axios from 'axios';
 import i18n from 'i18next';
 import moment from 'moment';
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Link, Redirect, Route, Switch } from "react-router-dom";
 import './App.scss';
 import ProgressBar from './app/components/network-progress';
 import { PrivateRoute } from './app/components/private-route';
 import { AuthContext } from './app/context/auth.context';
-import Account from './app/pages/account';
 import HomePage from './app/pages/home';
-import { MyComments } from './app/pages/my-comments';
-import { MyPosts } from './app/pages/my-posts';
-import NewPost from './app/pages/new-post';
 import NotFound from './app/pages/not-found';
 import ViewPost from './app/pages/view-post';
 import './locale/i18n';
+const NewPost = lazy(() => import('./app/pages/new-post'));
+const MyPosts = lazy(() => import('./app/pages/my-posts'));
+const MyComments = lazy(() => import('./app/pages/my-comments'));
+const Account = lazy(() => import('./app/pages/account'));
+
 
 interface IState {
   jwt: string,
@@ -61,11 +62,15 @@ export class App extends Component<any, IState>{
               <HomePage />
             </Route>
             <Route path="/post/*" component={ViewPost} />
-            <PrivateRoute jwt={this.state.jwt} path="/newPost" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={(props) => <NewPost {...props} />} />
-            <PrivateRoute jwt={this.state.jwt} path="/edit/:postId" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={(props) => <NewPost update={true} {...props} />} />
-            <PrivateRoute jwt={this.state.jwt} path="/account/posts" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={() => <MyPosts />} />
-            <PrivateRoute jwt={this.state.jwt} path="/account/comments" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={() => <MyComments />} />
-            <Route exact path="/account" component={Account} />
+            {/* lazy load */}
+            <Suspense fallback={<div className="spinner"><Spin /></div>}>
+              <PrivateRoute jwt={this.state.jwt} path="/newPost" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={(props) => <NewPost {...props} />} />
+              <PrivateRoute jwt={this.state.jwt} path="/edit/:postId" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={(props) => <NewPost update={true} {...props} />} />
+              <PrivateRoute jwt={this.state.jwt} path="/account/posts" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={() => <MyPosts />} />
+              <PrivateRoute jwt={this.state.jwt} path="/account/comments" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={() => <MyComments />} />
+              <Route exact path="/account" component={Account} />
+            </Suspense>
+            {/* lazy load */}
             <Route exact path="/">
               <Redirect
                 to={{

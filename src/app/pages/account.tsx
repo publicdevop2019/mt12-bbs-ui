@@ -5,7 +5,7 @@ import { AuthContext } from '../context/auth.context';
 import i18n from "../../locale/i18n";
 import { HttpClient } from "../http/http-client";
 
-export class Account extends Component {
+class Account extends Component {
     static contextType = AuthContext;
     componentDidMount() {
         if (window.location.search.indexOf('code') > -1) {

@@ -12,7 +12,7 @@ interface IState {
     postBrief: IPostBrief[] | undefined,
     eof: boolean
 }
-export class MyPosts extends Component<IProp, IState> {
+class MyPosts extends Component<IProp, IState> {
     private pageNum = 0;
     constructor(props: any) {
         super(props)
@@ -62,3 +62,4 @@ export class MyPosts extends Component<IProp, IState> {
         )
     }
 }
+export default MyPosts

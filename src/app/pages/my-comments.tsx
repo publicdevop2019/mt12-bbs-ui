@@ -14,7 +14,7 @@ interface IState {
     comments: IComment[] | undefined,
     eof: boolean
 }
-export class MyComments extends Component<IProp, IState> {
+class MyComments extends Component<IProp, IState> {
     private pageNum = 0;
     constructor(props: any) {
         super(props)
@@ -63,3 +63,4 @@ export class MyComments extends Component<IProp, IState> {
         )
     }
 }
+export default MyComments
