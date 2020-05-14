@@ -57,31 +57,31 @@ export class App extends Component<any, IState>{
             <Link to="/account"> <div onClick={() => { this.setState({ menu: 'account' }) }} className={this.state.menu === 'account' ? 'menu-selected' : 'menu-selected-not'} style={{ padding: '0px 8px' }}>
               <span><SettingOutlined style={{ paddingRight: '8px' }} /></span><span>{i18n.t('ACCOUNT')}</span></div></Link>
           </div>
-          <Switch>
-            <Route path="/home">
-              <HomePage />
-            </Route>
-            <Route path="/post/*" component={ViewPost} />
-            {/* lazy load */}
-            <Suspense fallback={<div className="spinner"><Spin /></div>}>
+          <Suspense fallback={<div className="spinner"><Spin /></div>}>
+            <Switch>
+              <Route path="/home">
+                <HomePage />
+              </Route>
+              <Route path="/post/*" component={ViewPost} />
+              {/* lazy load */}
               <PrivateRoute jwt={this.state.jwt} path="/newPost" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={(props) => <NewPost {...props} />} />
               <PrivateRoute jwt={this.state.jwt} path="/edit/:postId" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={(props) => <NewPost update={true} {...props} />} />
               <PrivateRoute jwt={this.state.jwt} path="/account/posts" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={() => <MyPosts />} />
               <PrivateRoute jwt={this.state.jwt} path="/account/comments" updateMenuToAccount={() => this.setState({ menu: 'account' })} render={() => <MyComments />} />
               <Route exact path="/account" component={Account} />
-            </Suspense>
-            {/* lazy load */}
-            <Route exact path="/">
-              <Redirect
-                to={{
-                  pathname: "/home",
-                }}
-              />
-            </Route>
-            <Route path="*">
-              <NotFound />
-            </Route>
-          </Switch>
+              {/* lazy load */}
+              <Route exact path="/">
+                <Redirect
+                  to={{
+                    pathname: "/home",
+                  }}
+                />
+              </Route>
+              <Route path="*">
+                <NotFound />
+              </Route>
+            </Switch>
+          </Suspense>
         </Router>
       </AuthContext.Provider>
     );
