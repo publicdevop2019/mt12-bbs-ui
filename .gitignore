@@ -48,7 +48,6 @@ testem.log
 Thumbs.db
 # firebase
 firebase.json
-/public
 .firebaserc
 .firebase/
 package-lock.json
