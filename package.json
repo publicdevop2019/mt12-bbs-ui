@@ -36,6 +36,7 @@
   },
   "scripts": {
     "start": "env-cmd -f ./src/environments/.env react-app-rewired start",
+    "start:pwa": "http-server ./build",
     "start-zh-Hans": "REACT_APP_LOCALE=zhHans env-cmd -f ./src/environments/.env --no-override react-app-rewired start",
     "build": "env-cmd -f ./src/environments/.env.prod react-app-rewired build",
     "build-zh-Hans": "env-cmd -f ./src/environments/.env.prod --no-override react-app-rewired build",
@@ -61,6 +62,7 @@
   },
   "devDependencies": {
     "@types/draft-js": "^0.10.40",
-    "@types/rx": "^4.1.1"
+    "@types/rx": "^4.1.1",
+    "http-server": "^0.12.3"
   }
 }

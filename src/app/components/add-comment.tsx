@@ -1,4 +1,3 @@
-import { PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Input } from "antd";
 import React, { useRef } from "react";
 import { useTranslation } from 'react-i18next';

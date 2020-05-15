@@ -8,7 +8,8 @@ const defaultStyle = {
     right: '-100%',
     height: '100%',
     display: 'flex',
-    flexDirection:'column'
+    flexDirection:'column',
+    flex:1
 }
 
 const transitionStyles: { [index: string]: any } = {
