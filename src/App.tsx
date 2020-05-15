@@ -53,7 +53,7 @@ export class App extends Component<any, IState>{
   }
   render() {
     return (
-      <div className={this.state.theme === 'dark' ? 'dark-theme' : undefined} style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div className={this.state.theme === 'dark' ? 'dark-theme' : undefined} style={{ minHeight: '100%', display: 'flex', flexDirection: 'column' }}>
         <ThemeContext.Provider value={{ theme: this.state.theme, updateTheme: (next) => { this.updateTheme(next) } }}>
           <AuthContext.Provider value={{ jwt: this.state.jwt, clearJwt: () => { this.clearJwt() }, updateJwt: (next) => { this.updateJwt(next) } }}>
             <Router>

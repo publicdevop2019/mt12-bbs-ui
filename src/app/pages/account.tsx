@@ -4,6 +4,7 @@ import AccountDetail from "../components/account-detail";
 import { AuthContext } from '../context/auth.context';
 import i18n from "../../locale/i18n";
 import { HttpClient } from "../http/http-client";
+import SlideInOut from "../components/animation/slide-in-out";
 
 class Account extends Component {
     static contextType = AuthContext;
@@ -20,15 +21,17 @@ class Account extends Component {
     render() {
         return (
             (
-                <AuthContext.Consumer>
-                    {({ jwt }) => (
-                        jwt === '' ?
-                            (<div style={{ flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                <Button type="primary" style={{ flex: 1, margin: '0px 8px' }} onClick={() => { this.openAuthroizationPage() }}>{i18n.t('LOG_IN')}</Button>
-                            </div>) :
-                            <AccountDetail />
-                    )}
-                </AuthContext.Consumer>
+                <SlideInOut>
+                    <AuthContext.Consumer>
+                        {({ jwt }) => (
+                            jwt === '' ?
+                                (<div style={{ flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                    <Button type="primary" style={{ flex: 1, margin: '0px 8px' }} onClick={() => { this.openAuthroizationPage() }}>{i18n.t('LOG_IN')}</Button>
+                                </div>) :
+                                <AccountDetail />
+                        )}
+                    </AuthContext.Consumer>
+                </SlideInOut>
             )
         )
     }

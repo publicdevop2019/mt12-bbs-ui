@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { RouteComponentProps } from 'react-router';
 import { RichTextEditor } from "../components/rich-text-editor";
 import { HttpClient, ICreatePostCommand } from "../http/http-client";
+import SlideInOut from "../components/animation/slide-in-out";
 
 const initialValue = [
     {
@@ -65,24 +66,26 @@ export class NewPost extends Component<IProp, IState>{
 
     render() {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', margin: '8px' }}>
-                <Select placeholder={i18n.t("TOPIC_PICK")} style={{ marginBottom: '8px' }} disabled={this.props.update}
-                    value={this.state.formPost.topic}
-                    onChange={(e) => this.handleInputChange(e, 'topic')}>
-                    <Option value="house">{i18n.t("TOPIC_HOUSE")}</Option>
-                    <Option value="auto">{i18n.t("TOPIC_AUTO")}</Option>
-                    <Option value="finance">{i18n.t("TOPIC_FINANCE")}</Option>
-                </Select>
-                <Input placeholder={i18n.t('ADD_POST_TITLE')} style={{ marginBottom: '8px' }} value={this.state.formPost.title} disabled={this.props.update}
-                    onChange={(e) => this.handleInputChange(e.target.value, 'title')} />
-                <RichTextEditor value={this.state.wysiwyg} setValue={(value) => { this.setState({ wysiwyg: value }) }} />
-                {
-                    this.props.update ?
-                        <Button type="primary" style={{ flex: 1, marginTop: '8px' }} onClick={() => HttpClient.updatePost(this.convertToPost(), this.props.match.params.postId)}>{i18n.t('UPDATE_POST')}</Button>
-                        :
-                        <Button type="primary" style={{ flex: 1, marginTop: '8px' }} onClick={() => HttpClient.createPost(this.convertToPost())}>{i18n.t('CREATE_POST')}</Button>
-                }
-            </div>
+            <SlideInOut>
+                <div style={{ display: 'flex', flexDirection: 'column', margin: '8px' }}>
+                    <Select placeholder={i18n.t("TOPIC_PICK")} style={{ marginBottom: '8px' }} disabled={this.props.update}
+                        value={this.state.formPost.topic}
+                        onChange={(e) => this.handleInputChange(e, 'topic')}>
+                        <Option value="house">{i18n.t("TOPIC_HOUSE")}</Option>
+                        <Option value="auto">{i18n.t("TOPIC_AUTO")}</Option>
+                        <Option value="finance">{i18n.t("TOPIC_FINANCE")}</Option>
+                    </Select>
+                    <Input placeholder={i18n.t('ADD_POST_TITLE')} style={{ marginBottom: '8px' }} value={this.state.formPost.title} disabled={this.props.update}
+                        onChange={(e) => this.handleInputChange(e.target.value, 'title')} />
+                    <RichTextEditor value={this.state.wysiwyg} setValue={(value) => { this.setState({ wysiwyg: value }) }} />
+                    {
+                        this.props.update ?
+                            <Button type="primary" style={{ flex: 1, marginTop: '8px' }} onClick={() => HttpClient.updatePost(this.convertToPost(), this.props.match.params.postId)}>{i18n.t('UPDATE_POST')}</Button>
+                            :
+                            <Button type="primary" style={{ flex: 1, marginTop: '8px' }} onClick={() => HttpClient.createPost(this.convertToPost())}>{i18n.t('CREATE_POST')}</Button>
+                    }
+                </div>
+            </SlideInOut>
         )
     }
 }
