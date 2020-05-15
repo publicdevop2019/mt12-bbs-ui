@@ -56,7 +56,7 @@ function DetailComment(props: IProp) {
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, marginLeft: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <div>{props.publishedBy === '-1' ? i18n.t('YOU') : props.publishedBy}</div>
-                        {props.id !== '-1' ?
+                        {props.publishedBy !== '-1' ?
                             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                 <LikeFilled style={{ color: userLike ? '#1DA57A' : 'inherit' }} onClick={() => { toggleLike() }} />
                                 <div style={{ paddingRight: '8px' }}>{userLikeNum}</div>

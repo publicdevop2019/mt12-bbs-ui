@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import '../../locale/i18n';
-import AddComment from "../components/add-comment";
-import DetailPost, { IComment, IPost } from "../components/detail-post";
-import NavBack from "../components/nav-back";
-import { HttpClient, COMMENT_PAGE_SIZE, ICreatePostCommand } from "../http/http-client";
 import i18n from "../../locale/i18n";
-import { GhostDiv } from "../components/ghost-card/ghost-card";
+import AddComment from "../components/add-comment";
 import { ICreateCommentCommand } from "../components/detail-comment";
+import DetailPost, { IComment, IPost } from "../components/detail-post";
+import { GhostDiv } from "../components/ghost-card/ghost-card";
+import NavBack from "../components/nav-back";
+import { COMMENT_PAGE_SIZE, HttpClient } from "../http/http-client";
 interface IState {
     openComment: boolean;
     replyTo: string;
@@ -31,7 +31,7 @@ export class ViewPost extends Component<any, IState>{
     }
     private refreshComment(tobe: ICreateCommentCommand) {
         const tobeComment = {
-            id: '-1',
+            id: '-1' + new Date().getMilliseconds(),
             publishedAt: new Date().toUTCString(),
             publishedBy: '-1',
             content: tobe.content,

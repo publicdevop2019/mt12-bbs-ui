@@ -5,6 +5,7 @@ import CardPost, { IPostBrief } from "../components/card-post";
 import { HttpClient, POST_PAGE_SIZE } from "../http/http-client";
 import { GhostDiv } from "../components/ghost-card/ghost-card";
 import { ThemeContext } from "../context/theme.context";
+import Fade from "../components/animation/fade-in";
 interface IProp {
 
 }
@@ -48,7 +49,6 @@ export class HomePage extends Component<IProp, IState>{
         });
     }
     render() {
-        console.dir()
         return (
             <ThemeContext.Consumer>{
                 ({ theme }) => (
@@ -64,12 +64,14 @@ export class HomePage extends Component<IProp, IState>{
                                 {i18n.t('TOPIC_FINANCE')}
                             </Menu.Item>
                         </Menu>
+
                         {
                             this.state.postBrief ?
                                 this.state.postBrief.length !== 0 ?
-                                    this.state.postBrief.map(e => <CardPost key={e.id} {...e} />) : <Empty description={false} className="empty-placeholder" />
+                                    this.state.postBrief.map(e => <Fade key={e.id} ><CardPost {...e} /></Fade>) : <Empty description={false} className="empty-placeholder" />
                                 : null
                         }
+
                         {this.state.eof ? <div style={{ textAlign: 'center', marginTop: '16px' }}>{i18n.t('END_OF_LIST')}</div> : <GhostDiv callback={() => { this.appendPosts() }} />}
                     </>
                 )

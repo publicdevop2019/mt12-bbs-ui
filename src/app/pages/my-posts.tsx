@@ -5,6 +5,7 @@ import NavBack from "../components/nav-back";
 import { HttpClient, POST_PAGE_SIZE } from "../http/http-client";
 import { Empty } from "antd";
 import { GhostDiv } from "../components/ghost-card/ghost-card";
+import Fade from "../components/animation/fade-in";
 interface IProp {
 
 }
@@ -57,7 +58,7 @@ class MyPosts extends Component<IProp, IState> {
                 <NavBack topic={i18n.t('MY_POSTS')} />
                 {this.state.postBrief ?
                     this.state.postBrief.length > 0 ?
-                        this.state.postBrief.map(e => <CardPost key={e.id} {...e} />) : <Empty description={false} className="empty-placeholder" />
+                        this.state.postBrief.map(e => <Fade key={e.id}><CardPost  {...e} /></Fade>) : <Empty description={false} className="empty-placeholder" />
                     : null}
                 {this.state.eof ? <div style={{ textAlign: 'center', marginTop: '16px' }}>{i18n.t('END_OF_LIST')}</div> : <GhostDiv callback={() => { this.appendPosts() }} />}
             </>

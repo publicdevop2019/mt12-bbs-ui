@@ -4,7 +4,7 @@ interface IProp {
     callback: () => Promise<void> | void
 }
 const visibilityConfig = {
-    threshold: 0
+    threshold: 1
 };
 export class GhostDiv extends Component<IProp, any>{
     private divRef: any;
