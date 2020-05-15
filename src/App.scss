@@ -66,6 +66,7 @@ $animation-duration: 2000ms;
 }
 .spinner{
   height: 100%;
+  flex:1;
   display: flex;
   flex-direction: column;
   justify-content: center;
