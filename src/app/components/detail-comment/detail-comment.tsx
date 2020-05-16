@@ -2,15 +2,10 @@ import { DislikeFilled, LikeFilled, MessageOutlined, UserOutlined } from '@ant-d
 import { Avatar } from "antd";
 import moment from "moment";
 import React, { useState } from "react";
-import '../../locale/i18n';
-import i18n from '../../locale/i18n';
-import { HttpClient } from '../http/http-client';
-import { IComment } from './detail-post';
+import i18n from '../../../locale/i18n';
+import { HttpClient } from '../../http/http-client';
+import { IComment } from '../detail-post';
 
-export interface ICreateCommentCommand {
-    content: string,
-    replyTo?: string,
-}
 interface IProp extends IComment {
     replyComment?: IComment,
     isLast: boolean,

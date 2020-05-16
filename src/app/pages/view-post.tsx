@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import '../../locale/i18n';
 import i18n from "../../locale/i18n";
-import AddComment from "../components/add-comment";
-import { ICreateCommentCommand } from "../components/detail-comment";
-import DetailPost, { IComment, IPost } from "../components/detail-post";
+import AddComment from "../components/add-comment/add-comment";
+// import { ICreateCommentCommand } from "../components/detail-comment";
+import DetailPost, { IComment, IPost, ICreateCommentCommand } from "../components/detail-post";
 import { GhostDiv } from "../components/ghost-card/ghost-card";
 import NavBack from "../components/nav-back";
 import { COMMENT_PAGE_SIZE, HttpClient } from "../http/http-client";

@@ -4,7 +4,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import '../../locale/i18n';
 import { HttpClient } from '../http/http-client';
-import DetailComment from './detail-comment';
+import DetailComment from './detail-comment/detail-comment';
 import { RichTextEditor } from './rich-text-editor';
 import i18n from '../../locale/i18n';
 import Fade from './animation/fade-in';

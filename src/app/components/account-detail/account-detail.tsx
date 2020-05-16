@@ -1,11 +1,10 @@
 import React from "react";
 import { useTranslation } from 'react-i18next';
-import '../../locale/i18n';
 import { Button, Switch } from "antd";
-import { AuthContext } from "../context/auth.context";
+import { AuthContext } from "../../context/auth.context";
 import { Link } from "react-router-dom";
 import { ReadOutlined, CommentOutlined } from '@ant-design/icons';
-import { ThemeContext } from "../context/theme.context";
+import { ThemeContext } from "../../context/theme.context";
 function AccountDetail(props: any) {
     const { t } = useTranslation();
     return (

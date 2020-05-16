@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import React, { Component } from "react";
-import AccountDetail from "../components/account-detail";
+import AccountDetail from "../components/account-detail/account-detail";
 import { AuthContext } from '../context/auth.context';
 import i18n from "../../locale/i18n";
 import { HttpClient } from "../http/http-client";

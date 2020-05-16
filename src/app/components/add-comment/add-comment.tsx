@@ -1,8 +1,7 @@
 import { Button, Input } from "antd";
 import React, { useRef } from "react";
 import { useTranslation } from 'react-i18next';
-import '../../locale/i18n';
-import { ICreateCommentCommand } from './detail-post';
+import { ICreateCommentCommand } from '../detail-post';
 
 export interface IAddComment {
     postId: string,
@@ -28,18 +27,18 @@ function AddComment(props: IAddComment) {
     }
     return (
         <>
-            {
 
+            {
                 props.commentFlag ?
                     (
                         <div style={{ display: 'flex', flexDirection: 'row', margin: '8px' }}>
                             {/* <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', paddingRight: '8px' }}><PlusCircleOutlined /></div> */}
                             <div style={{ flex: 1, paddingRight: '8px' }}><Input placeholder={props.replyTo ? props.replyTo : t('REPLY_NOW')} ref={textInput} /></div>
-                            <div><Button type="primary" onClick={() => { addComment() }}>{t('SEND')}</Button></div>
+                            <div><Button id="send-comment" type="primary" onClick={() => { addComment() }}>{t('SEND')}</Button></div>
                         </div>
                     ) : (
                         <div style={{ display: 'flex', flexDirection: 'row', margin: '8px' }}>
-                            <Button type="primary" style={{ flex: 1 }} onClick={() => props.openComment()}>{t('ADD_COMMENT')}</Button>
+                            <Button id="add-comment" type="primary" style={{ flex: 1 }} onClick={() => props.openComment()}>{t('ADD_COMMENT')}</Button>
                         </div>
 
                     )

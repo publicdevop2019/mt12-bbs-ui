@@ -6,7 +6,7 @@ import moment from 'moment';
 import React, { Component, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Link, Redirect, Route, Switch } from "react-router-dom";
 import './App.scss';
-import ProgressBar from './app/components/network-progress';
+import ProgressBar from './app/components/network-progress/network-progress';
 import { PrivateRoute } from './app/components/private-route';
 import { AuthContext } from './app/context/auth.context';
 import { ThemeContext } from './app/context/theme.context';
