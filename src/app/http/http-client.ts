@@ -82,11 +82,26 @@ export class HttpClient {
     public static async addLikePost(postId: string) {
         await axios.post(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId + '/likes');
     }
+    public static async addReportPost(postId: string) {
+        await axios.post(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId + '/reports');
+    }
+    public static async addNotInterestedPost(postId: string) {
+        await axios.post(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId + '/notInterested');
+        message.success(i18n.t('NET_SUCCESS'))
+    }
     public static async removeLikePost(postId: string) {
         await axios.delete(process.env.REACT_APP_SERVER_URL + '/private/posts/' + postId + '/likes');
     }
     public static async addLikeComment(commentId: string) {
         await axios.post(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId + '/likes');
+    }
+    public static async addReportComment(commentId: string) {
+        await axios.post(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId + '/reports');
+        message.success(i18n.t('NET_SUCCESS'))
+    }
+    public static async addNotInterestedComment(commentId: string) {
+        await axios.post(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId + '/notInterested');
+        message.success(i18n.t('NET_SUCCESS'))
     }
     public static async removeLikeComment(commentId: string) {
         await axios.delete(process.env.REACT_APP_SERVER_URL + '/private/comments/' + commentId + '/likes');

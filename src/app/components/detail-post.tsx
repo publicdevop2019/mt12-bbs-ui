@@ -1,5 +1,5 @@
-import { DislikeFilled, LikeFilled, UserOutlined } from '@ant-design/icons';
-import { Avatar } from "antd";
+import { MoreOutlined, DislikeFilled, LikeFilled, UserOutlined } from '@ant-design/icons';
+import { Avatar, Dropdown, Menu } from "antd";
 import moment from "moment";
 import React, { useState } from "react";
 import '../../locale/i18n';
@@ -77,11 +77,31 @@ function DetailPost(props: IProp) {
     const parseReplyComment = (comment: IComment) => {
         return props.commentList!.filter(el => String(el.id) === String(comment.replyTo))[0]
     }
+    const menu = (
+        <Menu>
+            <Menu.Item>
+                <div onClick={()=>{
+                    HttpClient.addReportPost(props.id).then()
+                }}>{i18n.t('REPORT')}</div>
+            </Menu.Item>
+            <Menu.Item>
+                <div onClick={()=>{
+                    HttpClient.addNotInterestedPost(props.id).then()
+                }}>{i18n.t('NOT_INTERESTED')}</div>
+            </Menu.Item>
+        </Menu>
+    );
     return (
         <div style={{ margin: '8px' }}>
             <Fade>
                 <>
-                    <div style={{ fontWeight: 600, fontSize: '24px', paddingBottom: '8px' }}>{props.title}{props.userModified ? <span style={{ fontWeight: 400, fontSize: '16px', marginLeft: '8px' }}>{i18n.t('USER_MODIFIED')}</span> : null}</div>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ fontWeight: 600, fontSize: '24px', paddingBottom: '8px' }}>{props.title}{props.userModified ? <span style={{ fontWeight: 400, fontSize: '16px', marginLeft: '8px' }}>{i18n.t('USER_MODIFIED')}</span> : null}
+                        </div>
+                        <Dropdown overlay={menu}>
+                            <MoreOutlined style={{ fontSize: '24px' }} />
+                        </Dropdown>
+                    </div>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <Avatar size="large" icon={<UserOutlined />} />
                         <div style={{ display: 'flex', flexDirection: 'column', flex: 1, marginLeft: '20px' }}>

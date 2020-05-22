@@ -38,7 +38,9 @@ const resources = {
       "END_OF_LIST": "~~ End Of List ~~",
       "YOU": "You",
       "USER_MODIFIED":"(Edited)",
-      "DARK_THEME":"Dark Theme"
+      "DARK_THEME":"Dark Theme",
+      "NOT_INTERESTED":"Not Interested",
+      "REPORT":"Report"
     }
   },
   zhHans: {
@@ -77,7 +79,9 @@ const resources = {
       "END_OF_LIST": "~~ 到底喽 ~~",
       "YOU": "你",
       "USER_MODIFIED":"(已修改)",
-      "DARK_THEME":"夜间模式"
+      "DARK_THEME":"夜间模式",
+      "NOT_INTERESTED":"不感兴趣",
+      "REPORT":"举报"
     }
   }
 };
