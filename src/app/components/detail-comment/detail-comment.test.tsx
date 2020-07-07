@@ -1,7 +1,16 @@
-import React from "react";
+import React, { Component } from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import DetailComment from "./detail-comment";
+//@note for note only 
+export class MockButton extends Component {
+    Item = <></>
+}
+jest.doMock('antd', () => {
+    return {
+        Menu: MockButton,
+    }
+})
 jest.mock('../../../locale/i18n', () => ({
     t: () => ({
         t: (key: any) => key
@@ -9,7 +18,6 @@ jest.mock('../../../locale/i18n', () => ({
 }));
 jest.mock('moment', () => () => ({ fromNow: () => 'mockMoment' }));
 let container: any = null;
-
 beforeEach(() => {
     container = document.createElement("div");
     document.body.appendChild(container);
@@ -35,5 +43,5 @@ it("", () => {
     act(() => {
         render(<DetailComment {...mock} isLast={false} reply={reply} delete={deleteFn} />, container);
     });
-    expect(container.textContent).toBe("000mockMomentstring");
+    expect(container.textContent).toBe("0mockMomentstring00");
 });
