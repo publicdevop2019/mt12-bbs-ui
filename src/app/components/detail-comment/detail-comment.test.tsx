@@ -3,12 +3,14 @@ import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import DetailComment from "./detail-comment";
 jest.mock('antd', () => {
-    const mockMenu=jest.fn();
-    (mockMenu as any).Item=jest.fn();
+    const mockMenu = () => {
+        return <div>mocked</div>
+    };
+    (mockMenu as any).Item = "mocked-item";
     return {
         Menu: mockMenu,
-        Dropdown: ()=>'mock-Menu',
-        Avatar: ()=>'mock-Menu',
+        Dropdown: () => 'mock-Menu',
+        Avatar: () => 'mock-Menu',
     }
 })
 jest.mock('../../../locale/i18n', () => ({
